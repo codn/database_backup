@@ -1,4 +1,4 @@
-# Postgres Database Backup
+# Postgres Database Backup in Dropbox
 
 This is a script to backup your database in dropbox every given time
 (configured in a crontab). It connects to your database creates a dump and
@@ -8,13 +8,26 @@ Tested in digital ocean droplets.
 
 # Setup
 
-Before starting:
-* Make sure your user can execute ruby.
-* gem install dropbox-api
-* run `rvm cron setup` in order to execute ruby in crontabs
-* `git clone https://github.com/codn/dropbox-database-backup.git ~/dropbox-database-backup`
-* Create a dropbox app (if you dont have one yet)
-* Update variables `db_user`, `db_pass`, `Dropbox::API::Config.app_key`, `Dropbox::API::Config.app_secret` and `client` in `~/dropbox-database-backup/backup.rb`
+Before starting make sure your user can execute ruby.
+
+Run
+```
+gem install dropbox-api
+rvm cron setup
+git clone https://github.com/codn/dropbox-database-backup.git ~/dropbox-database-backup
+```
+Create a dropbox app (if you dont have one yet)
+
+Update variables
+```
+nano ~/dropbox-database-backup/backup.rb
+```
+* `db_to_backup`
+* `db_user`
+* `db_pass`
+* `Dropbox::API::Config.app_key`
+* `Dropbox::API::Config.app_secret`
+* `client`
 
 Run:
 
@@ -23,6 +36,8 @@ crontab -e
 ```
 
 Append your crontab
+
+***Make sure script path is correct***
 
 ```
 # run every day at 2:30 am
@@ -33,3 +48,5 @@ Append your crontab
 ```
 
 Youre database is now being backed up in your dropbox. :tada:
+
+Issues and pull requests to improve documentation or code are welcome.
