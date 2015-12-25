@@ -12,22 +12,16 @@ Before starting:
 * Make sure your user can execute ruby.
 * gem install dropbox-api
 * run `rvm cron setup` in order to execute ruby in crontabs
-* `git clone git@github.com:codn/dropbox-database-backup.git ~/dropbox-database-backup`
+* `git clone https://github.com/codn/dropbox-database-backup.git ~/dropbox-database-backup`
 * Create a dropbox app (if you dont have one yet)
-*
-* Update your backup configurations with `nano ~/dropbox-database-backup/backup.rb`
+* Update variables `db_user`, `db_pass`, `Dropbox::API::Config.app_key`, `Dropbox::API::Config.app_secret` and `client` in `~/dropbox-database-backup/backup.rb`
 
-In your server add your script to the crontab with:
+Run:
 
-```crontab -e```
-Paramters in order:
-* Minutes (0-59)
-* Hour (0-23)
-* Day of month (1-31)
-* Month (1-12 or JAN-DEC)
-* Day of Week (0-6 or SUN-SAT)
+```
+crontab -e
+```
 
-To run every day at 2:30 am:
 Append your crontab
 
 ```
