@@ -41,10 +41,10 @@ Append your crontab
 
 ```
 # run every day at 2:30 am
-30 2 * * * /home/rails/dropbox-database-backup/backup.rb >> /home/rails/dropbox-database-backup/backup-cron.log 2>&1
+30 2 * * * ruby /home/rails/dropbox-database-backup/backup.rb >> /home/rails/dropbox-database-backup/backup-cron.log 2>&1
 
 # run every minute (to test it works)
-* * * * * /home/rails/dropbox-database-backup/backup.rb >> /home/rails/dropbox-database-backup/backup-cron.log 2>&1
+* * * * * ruby /home/rails/dropbox-database-backup/backup.rb >> /home/rails/dropbox-database-backup/backup-cron.log 2>&1
 ```
 
 Youre database is now being backed up in your dropbox. :tada:
