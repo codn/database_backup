@@ -6,9 +6,9 @@ upload it to your personal dropbox.
 
 Tested in digital ocean droplets.
 
-# Setup
-
-Before starting make sure your user can execute ruby.
+# Dependencies
+* Ruby
+* Crontab
 
 Run
 ```
@@ -16,6 +16,7 @@ gem install dropbox-api
 rvm cron setup
 git clone https://github.com/codn/dropbox-database-backup.git ~/dropbox-database-backup
 ```
+
 Create a dropbox app (if you dont have one yet)
 
 Update variables
