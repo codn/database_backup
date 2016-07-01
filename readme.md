@@ -48,6 +48,10 @@ Append your crontab
 * * * * * ruby /home/deploy/dropbox-database-backup/backup.rb >> /home/deploy/dropbox-database-backup/backup-cron.log 2>&1
 ```
 
-Youre database is now being backed up in your dropbox. :tada:
+Youre database is now being backed up in your dropbox and can be restored with:
+```
+# Whatever the database and your backup names are.
+$ pg_restore -C -d database_name 2016-02-24T05_12_01-05_00.pg_dump 
+```
 
 Issues and pull requests to improve documentation or code are welcome.
