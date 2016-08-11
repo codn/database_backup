@@ -40,7 +40,7 @@ system(
   "-h localhost " +  # host
   "-p 5432 " +       # port
   db_to_backup +
-  " > #{backup_name}"
+  " > #{backup_file_path}"
 )
 
 # Upload to dropbox
