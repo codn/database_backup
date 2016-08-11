@@ -49,10 +49,10 @@ Append your crontab
 ```
 
 Youre database is now being backed up in your dropbox and can be restored with:
-***Your database must be created and with the tables truncated***
+***Your database (and schemas) must exist with their tables truncated***
 ```
 # Whatever the database and your backup names are.
-$ pg_restore -C -d database_name 2016-02-24T05_12_01-05_00.pg_dump 
+$ pg_restore -C -d database_name 2016-02-24T05_12_01-05_00.pg_dump.tar 
 ```
 
 Issues and pull requests to improve documentation or code are welcome.
