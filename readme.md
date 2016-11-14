@@ -12,17 +12,17 @@ Tested in digital ocean droplets.
 
 Run
 ```
-gem install dropbox-api
+gem install dropbox-sdk-v2
 rvm cron setup
 git clone https://github.com/codn/dropbox-database-backup.git ~/dropbox-database-backup
 ```
 
-(Create a dropbox app)[https://www.dropbox.com/developers/apps/create] (if you dont have one yet):
+[Create a dropbox app](https://www.dropbox.com/developers/apps/create) (if you dont have one yet):
 * Choose dropbox-api
 * Choose app-folder
 * Allow oauth redirect to http://localhost
 
-Generate your acess_token entering this url:
+Generate your ACCESS TOKEN entering this url (replacing YOUR_APP_KEY with the dropbox app key):
 
 ```
 https://www.dropbox.com/oauth2/authorize?client_id=YOUR_APP_KEY&response_type=token&redirect_uri=http://localhost
