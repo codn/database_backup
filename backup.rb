@@ -1,23 +1,10 @@
 require 'dropbox'
 require 'date'
 
-#############################
-# Configuring your dropbox app
-## create app: https://www.dropbox.com/developers/apps/create
-## * Choose dropbox-api
-## * Choose app-folder
-## * Allow oauth redirect to http://localhost
-#############################
-# To generate access token enter this url with replacing YOUR_APP_KEY
-#
-# https://www.dropbox.com/oauth2/authorize?client_id=YOUR_APP_KEY&response_type=token&redirect_uri=http://localhost
-# After you accept, you are going to be redirected to:
-# http://localhost/access_token=COMPLETE-ACCESS-TOKEN&token-type=bearer
-client = Dropbox::Client.new(COMPLETE_ACCESS_TOKEN)
-
-##########
-# Database
-##########
+##################
+# Setup
+##################
+acess_token = 'user_access_token'
 db_user = "rails" # User to access database
 db_pass = "db_pass" # password of the user to access database
 db_to_backup = "app_production" # name of the database to backup
@@ -45,4 +32,5 @@ system(
 )
 
 # Upload to dropbox
+client = Dropbox::Client.new(access_token)
 client.upload "#{backup_folder}/#{backup_name}", File.read(backup_file_path)
