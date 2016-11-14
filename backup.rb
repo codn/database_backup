@@ -1,4 +1,4 @@
-require 'dropbox-api'
+require 'dropbox'
 require 'date'
 
 #############################
@@ -6,13 +6,14 @@ require 'date'
 ## create app: https://www.dropbox.com/developers/apps/create
 ## * Choose dropbox-api
 ## * Choose app-folder
-# See https://github.com/futuresimple/dropbox-api#rake-based-authorization
-# for help generating your client token and secret.
+## * Allow oauth redirect to http://localhost
 #############################
-Dropbox::API::Config.app_key    = 'dropbox_app_key'
-Dropbox::API::Config.app_secret = 'dropbox_app_secret'
-Dropbox::API::Config.mode       = 'sandbox'
-client = Dropbox::API::Client.new(token: 'token', secret: 'secret')
+# To generate access token enter this url with replacing YOUR_APP_KEY
+#
+# https://www.dropbox.com/oauth2/authorize?client_id=YOUR_APP_KEY&response_type=token&redirect_uri=http://localhost
+# After you accept, you are going to be redirected to:
+# http://localhost/access_token=COMPLETE-ACCESS-TOKEN&token-type=bearer
+client = Dropbox::Client.new(COMPLETE_ACCESS_TOKEN)
 
 ##########
 # Database
@@ -26,7 +27,7 @@ db_to_backup = "app_production" # name of the database to backup
 ##########
 backup_name = "#{DateTime.now}.pg_dump.tar" # name of the created backup file
 backup_file_path = "/tmp/#{backup_name}"
-backup_folder = db_to_backup
+backup_folder = "/#{db_to_backup}"
 
 #############################
 # Script
@@ -44,4 +45,4 @@ system(
 )
 
 # Upload to dropbox
-client.chunked_upload "#{backup_folder}/#{backup_name}", File.open(backup_file_path)
+client.upload "#{backup_folder}/#{backup_name}", File.read(backup_file_path)
