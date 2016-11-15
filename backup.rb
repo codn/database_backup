@@ -4,7 +4,7 @@ require 'date'
 ##################
 # Setup
 ##################
-acess_token = 'user_access_token'
+dropbox_access_token = 'user_access_token'
 db_user = "rails" # User to access database
 db_pass = "db_pass" # password of the user to access database
 db_to_backup = "app_production" # name of the database to backup
@@ -32,5 +32,5 @@ system(
 )
 
 # Upload to dropbox
-client = Dropbox::Client.new(access_token)
+client = Dropbox::Client.new(dropbox_access_token)
 client.upload "#{backup_folder}/#{backup_name}", File.read(backup_file_path)
