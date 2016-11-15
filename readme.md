@@ -57,6 +57,8 @@ Append your crontab
 * * * * * ruby /home/deploy/dropbox-database-backup/backup.rb >> /home/deploy/dropbox-database-backup/backup-cron.log 2>&1
 ```
 
+Rbenv users: user your user's ruby to run the command. No other setup required: `/home/deploy/.rbenv/shims/ruby /home/deploy/dropbox-database-backup/backup.rb >> /home/deploy/dropbox-database-backup/backup-cron.log 2>&1`
+
 Youre database is now being backed up in your dropbox and can be restored with:
 ***Your database (and schemas) must exist with their tables truncated***
 ```
