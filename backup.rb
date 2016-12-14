@@ -12,10 +12,11 @@ db_to_backup = "app_production" # name of the database to backup
 # Misc
 ##########
 now = Time.now
+
 backup_name = "#{now.to_s.gsub(' ', '_')}.pg_dump.tar" # name of the created backup file
 backup_file_path = "/tmp/#{backup_name}"
 backup_folder = "/#{db_to_backup}"
-oldest_backup_date = Time.new(now.year, now.month - 1, now.day, now.hour, now.min, now.sec)
+oldest_backup_date = Time.new(now.year, now.month - 1, now.day, now.hour, now.min, now.sec) # More than a month old
 
 #############################
 # Script
@@ -39,7 +40,6 @@ client.upload "#{backup_folder}/#{backup_name}", File.read(backup_file_path)
 #####################
 # Delete old backups
 #####################
-# Delete older than a month old
 files = client.list_folder backup_folder
 files.each do |file|
   file_name = file.name
