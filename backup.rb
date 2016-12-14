@@ -43,7 +43,7 @@ client.upload "#{backup_folder}/#{backup_name}", File.read(backup_file_path)
 files = client.list_folder backup_folder
 files.each do |file|
   if file.server_modified < oldest_backup_date
-    print "Detected #{file.path_lower} is older than permitted date, deleting..."
+    print "Detected #{file.path_lower} is older than permitted date, deleting...\n"
     client.delete file.path_lower
   end
 end
