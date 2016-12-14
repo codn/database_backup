@@ -30,6 +30,8 @@ https://www.dropbox.com/oauth2/authorize?client_id=YOUR_APP_KEY&response_type=to
 # Copy your COMPLETE-ACCESS-TOKEN
 ```
 
+# Usage
+
 Update variables
 ```
 nano ~/dropbox-database-backup/backup.rb
