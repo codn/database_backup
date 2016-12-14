@@ -1,5 +1,4 @@
 require 'dropbox'
-require 'date'
 
 ##################
 # Setup
@@ -12,9 +11,11 @@ db_to_backup = "app_production" # name of the database to backup
 ##########
 # Misc
 ##########
-backup_name = "#{DateTime.now}.pg_dump.tar" # name of the created backup file
+now = Time.now
+backup_name = "#{now.to_s.gsub(' ', '_')}.pg_dump.tar" # name of the created backup file
 backup_file_path = "/tmp/#{backup_name}"
 backup_folder = "/#{db_to_backup}"
+oldest_backup_date = Time.new(now.year, now.month - 1, now.day, now.hour, now.min, now.sec)
 
 #############################
 # Script
@@ -34,3 +35,17 @@ system(
 # Upload to dropbox
 client = Dropbox::Client.new(dropbox_access_token)
 client.upload "#{backup_folder}/#{backup_name}", File.read(backup_file_path)
+
+#####################
+# Delete old backups
+#####################
+# Delete older than a month old
+files = client.list_folder backup_folder
+files.each do |file|
+  file_name = file.name
+  file_name.gsub(".pg_dump.tar", "")
+  if file.server_modified < oldest_backup_date
+    print "Detected #{file.path_lower} is older than permitted date, deleting..."
+    client.delete file.path_lower
+  end
+end
