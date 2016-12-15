@@ -13,7 +13,7 @@ db_to_backup = "app_production" # name of the database to backup
 ##########
 now = Time.now
 
-backup_name = "#{now.to_s.gsub(' ', '_')}.pg_dump.tar" # name of the created backup file
+backup_name = "#{now.to_s.gsub(' ', '_')}.pg_dump" # name of the created backup file
 backup_file_path = "/tmp/#{backup_name}"
 backup_folder = "/#{db_to_backup}"
 oldest_backup_date = Time.new(now.year, now.month - 1, now.day, now.hour, now.min, now.sec) # More than a month old
@@ -21,11 +21,12 @@ oldest_backup_date = Time.new(now.year, now.month - 1, now.day, now.hour, now.mi
 #############################
 # Script
 #############################
+print "Backing up #{db_to_backup}\n"
 system(
   "PGPASSWORD=\"#{db_pass}\" " +
   "pg_dump " +
   "-U #{db_user} " + # user
-  "-F t " +          # tar
+  "-Fc " +           # Format=custom
   "-a " +            # data only
   "-h localhost " +  # host
   "-p 5432 " +       # port
@@ -33,6 +34,7 @@ system(
   " > #{backup_file_path}"
 )
 
+print "Uploading #{backup_file_path} to #{backup_folder}/#{backup_name} (~#{(File.size(backup_file_path) / (1024 * 1024)).round(2)} MB)\n"
 # Upload to dropbox
 client = Dropbox::Client.new(dropbox_access_token)
 client.upload "#{backup_folder}/#{backup_name}", File.read(backup_file_path)

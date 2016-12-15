@@ -22,7 +22,7 @@ git clone https://github.com/codn/dropbox-database-backup.git ~/dropbox-database
 * Choose app-folder
 * Allow oauth redirect to http://localhost
 
-Generate your ACCESS TOKEN entering this url (replacing YOUR_APP_KEY with the dropbox app key):
+Generate your ACCESS TOKEN entering the next url (replacing `YOUR_APP_KEY` with the dropbox app key):
 
 ```
 https://www.dropbox.com/oauth2/authorize?client_id=YOUR_APP_KEY&response_type=token&redirect_uri=http://localhost
