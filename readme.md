@@ -10,6 +10,20 @@ Tested in digital ocean droplets.
 * Ruby
 * Crontab
 
+# Quick installation (Recommended)
+
+Backups are installed by running one of the following commands in your terminal. You can install this via the command-line with either curl or wget.
+
+via curl
+```
+$ sh -c "$(curl -fsSL https://raw.githubusercontent.com/codn/dropbox-database-backup/master/install.sh)"
+```
+via wget
+```
+$ sh -c "$(wget https://raw.githubusercontent.com/codn/dropbox-database-backup/master/install.sh -O -)"
+```
+
+# Manual installation
 Run
 ```
 gem install dropbox-sdk-v2
@@ -30,17 +44,6 @@ https://www.dropbox.com/oauth2/authorize?client_id=YOUR_APP_KEY&response_type=to
 # Copy your COMPLETE-ACCESS-TOKEN
 ```
 
-# Usage
-
-Update variables
-```
-nano ~/dropbox-database-backup/backup.rb
-```
-* `db_to_backup`
-* `db_user`
-* `db_pass`
-* `acess_token`
-
 Run:
 
 ```
@@ -60,6 +63,19 @@ Append your crontab
 ```
 
 Rbenv users: user your user's ruby to run the command. No other setup required: `/home/deploy/.rbenv/shims/ruby /home/deploy/dropbox-database-backup/backup.rb >> /home/deploy/dropbox-database-backup/backup-cron.log 2>&1`
+
+# Usage
+
+Update variables
+```
+nano ~/dropbox-database-backup/backup.rb
+```
+* `db_to_backup`
+* `db_user`
+* `db_pass`
+* `acess_token`
+
+# Recovering database
 
 Youre database is now being backed up in your dropbox and can be restored with:
 ***Your database (and schemas) must exist with their tables truncated***
