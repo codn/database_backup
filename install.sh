@@ -24,9 +24,6 @@ main() {
   # which may fail on systems lacking tput or terminfo
   set -e
 
-  echo "hello `whoami`"
-  exit 1
-
   if [ ! command "rvm" &> /dev/null ] && [  command 'rbenv' &> /dev/null ]; then
     echo 'nor rbenv or rvm found please install one!'
     exit 1
@@ -45,7 +42,7 @@ main() {
   }
 
   env git clone --depth=1 https://github.com/codn/dropbox-database-backup.git ~/dropbox-database-backup || {
-    printf "Error: git clone of drobbox-database-backup repo failed\n"
+    echo "Error: git clone of drobbox-database-backup repo failed"
     exit 1
   }
 
