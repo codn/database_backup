@@ -24,7 +24,7 @@ main() {
   # which may fail on systems lacking tput or terminfo
   set -e
 
-  if [ ! command "rvm" &> /dev/null ] && [  command 'rbenv' &> /dev/null ]; then
+  if [ ! hash "rvm" > /dev/null ] && [ ! hash 'rbenv' > /dev/null ]; then
     echo 'nor rbenv or rvm found please install one!'
     exit 1
   fi
@@ -36,7 +36,7 @@ main() {
   }
 
   printf "${BLUE}Cloning Dropbox database backup...${NORMAL}\n"
-  hash git >/dev/null 2>&1 || {
+  hash git > /dev/null 2>&1 || {
     echo "Error: git is not installed"
     exit 1
   }
@@ -52,14 +52,14 @@ main() {
     exit 1
   }
 
-  if [[ command "rvm" &> /dev/null ]]; then
+  if [ hash "rvm" > /dev/null ]; then
     rvm cron setup
     RVM_CMD="30 2 * * * ruby /home/deploy/dropbox-database-backup/backup.rb >> /home/deploy/dropbox-database-backup/backup-cron.log 2>&1"
     (crontab -u `whoami` -l; echo "$RVM_CMD") | crontab -u `whoami` - || {
       echo "Errror installing crontab with rvm"
       exit 1
     }
-  elif [[ command "rbenv" &> /dev/null ]]; then
+  elif [ hash "rbenv" > /dev/null ]; then
     RBENV_CMD="30 2 * * * /home/`whoami`/.rbenv/shims/ruby /home/`whoami`/dropbox-database-backup/backup.rb >> /home/`whoami`/dropbox-database-backup/backup-cron.log 2>&1"
     (crontab -u `whoami` -l; echo "$RBENV_CMD") | crontab -u `whoami` - || {
       echo "Errror installing crontab with rbenv"
@@ -69,15 +69,17 @@ main() {
 
   printf "${RED}"
 
-  echo "   (          (            (  (               )  (           )      "
-  echo "   )\         )\ )         )\))(   '   (   ( /(  )\    )  ( /(      "
-  echo " (((_)   (   (()/(  (     ((_)()\ )   ))\  )\())((_)( /(  )\()) (   "
-  echo " )\___   )\   ((_)) )\ )  _(())\_)() /((_)((_)\  _  )(_))((_)\  )\  "
-  echo "((/ __| ((_)  _| | _(_/(  \ \((_)/ /(_))  | |(_)| |((_)_ | |(_)((_) "
-  echo " | (__ / _ \/ _\` || ' \))  \ \/\/ / / -_) | '_ \| |/ _\` || '_ \(_-< "
-  echo "  \___|\___/\__,_||_||_|    \_/\_/  \___| |_.__/|_|\__,_||_.__//__/ "
+  echo "            (         )                                              "
+  echo "   (        )\ )   ( /(   (  (               )  (        (     )     "
+  echo "   )\      (()/(   )\())  )\))(   '   (   ( /(  )\    )  )\ ( /(     "
+  echo " (((_)   (  /(_)) ((_)\  ((_)()\ )   ))\  )\())((_)( /( ((_))\()) (  "
+  echo " )\___   )\(_))_   _((_) _(())\_)() /((_)((_)\  _  )(_)) _ ((_)\  )\ "
+  echo "((/ __| ((_)|   \ | \| | \ \((_)/ /(_))  | |(_)| |((_)_ | || |(_)((_)"
+  echo " | (__ / _ \| |) || .\` |  \ \/\/ / / -_) | '_ \| |/ _\` || || '_ \(_-<"
+  echo "  \___|\___/|___/ |_|\_|   \_/\_/  \___| |_.__/|_|\__,_||_||_.__//__/"
 
   printf "${NORMAL}"
+
   echo ''
   echo 'Look over the docs at https://github.com/codn/dropbox-database-backup'
   echo ''
