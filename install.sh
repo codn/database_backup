@@ -2,7 +2,7 @@ main() {
   # Use colors, but only if connected to a terminal, and that terminal
   # supports them.
   if which tput >/dev/null 2>&1; then
-      ncolors=$(tput colors)
+    ncolors=$(tput colors)
   fi
   if [ -t 1 ] && [ -n "$ncolors" ] && [ "$ncolors" -ge 8 ]; then
     RED="$(tput setaf 1)"
@@ -24,10 +24,16 @@ main() {
   # which may fail on systems lacking tput or terminfo
   set -e
 
-  if [ ! hash "rvm" > /dev/null ] && [ ! hash 'rbenv' > /dev/null ]; then
-    echo 'nor rbenv or rvm found please install one!'
-    exit 1
-  fi
+  hash rvm > /dev/null 2>&1 || {
+    RVM='Y'
+    RBENV='N'
+    hash rbenv > /dev/null 2>&1 || {
+      RVM='N'
+      RVM='Y'
+      echo 'nor rbenv or rvm found please install one!'
+      exit 1
+    }
+  }
 
   printf "${BLUE}Installing gems dependencies...${NORMAL}\n"
   gem install dropbox-sdk-v2 || {
@@ -47,19 +53,20 @@ main() {
   }
 
   printf "${BLUE}Setting up the crontab...${NORMAL}\n"
-  hash crontab >/dev/null 2>&1 || {
+  hash crontab > /dev/null 2>&1 || {
     echo "Error: crontab is not installed"
     exit 1
   }
 
-  if [ hash "rvm" > /dev/null ]; then
+  if [[ "$RVM" == "Y" ]]; then
     rvm cron setup
     RVM_CMD="30 2 * * * ruby /home/deploy/dropbox-database-backup/backup.rb >> /home/deploy/dropbox-database-backup/backup-cron.log 2>&1"
     (crontab -u `whoami` -l; echo "$RVM_CMD") | crontab -u `whoami` - || {
       echo "Errror installing crontab with rvm"
       exit 1
     }
-  elif [ hash "rbenv" > /dev/null ]; then
+  fi
+  if [[ "$RVM" == "Y" ]]; then
     RBENV_CMD="30 2 * * * /home/`whoami`/.rbenv/shims/ruby /home/`whoami`/dropbox-database-backup/backup.rb >> /home/`whoami`/dropbox-database-backup/backup-cron.log 2>&1"
     (crontab -u `whoami` -l; echo "$RBENV_CMD") | crontab -u `whoami` - || {
       echo "Errror installing crontab with rbenv"
