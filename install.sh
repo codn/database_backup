@@ -66,7 +66,7 @@ main() {
       exit 1
     }
   fi
-  if [[ "$RVM" == "Y" ]]; then
+  if [[ "$RBENV" == "Y" ]]; then
     RBENV_CMD="30 2 * * * /home/`whoami`/.rbenv/shims/ruby /home/`whoami`/dropbox-database-backup/backup.rb >> /home/`whoami`/dropbox-database-backup/backup-cron.log 2>&1"
     (crontab -u `whoami` -l; echo "$RBENV_CMD") | crontab -u `whoami` - || {
       echo "Errror installing crontab with rbenv"
