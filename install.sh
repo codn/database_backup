@@ -24,12 +24,14 @@ main() {
   # which may fail on systems lacking tput or terminfo
   set -e
 
+  RVM='Y'
+  RBENV='Y'
   hash rvm > /dev/null 2>&1 || {
-    RVM='Y'
-    RBENV='N'
+    RVM='N'
+    RBENV='Y'
     hash rbenv > /dev/null 2>&1 || {
       RVM='N'
-      RVM='Y'
+      RVM='N'
       echo 'nor rbenv or rvm found please install one!'
       exit 1
     }
