@@ -58,7 +58,7 @@ main() {
   }
 
   printf "${BLUE}Setting up the crontab...${NORMAL}\n"
-  if [ "$RVM" == "Y" ]; then
+  if [ "$RVM" = "Y" ]; then
     rvm cron setup
     RVM_CMD="30 2 * * * ruby /home/deploy/dropbox-database-backup/backup.rb >> /home/deploy/dropbox-database-backup/backup-cron.log 2>&1"
     (crontab -u `whoami` -l; echo "$RVM_CMD") | crontab -u `whoami` - || {
