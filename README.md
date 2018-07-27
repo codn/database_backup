@@ -22,7 +22,19 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+It is recommended, when running with rails, to execute task with whenever.
+
+```
+wheneverize .
+```
+
+## Example config/schedule.rb
+
+```
+  every 1.day do # 1.minute 1.day 1.week 1.month 1.year is also supported
+    rake "my:rake:task"
+  end
+```
 
 ## Development
 

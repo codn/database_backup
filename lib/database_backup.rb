@@ -1,4 +1,4 @@
-require "database/backup/version"
+require "database_backup/version"
 
 module Database
   module Backup
