@@ -62,7 +62,7 @@ Append your crontab
 * * * * * ruby /home/deploy/dropbox-database-backup/backup.rb >> /home/deploy/dropbox-database-backup/backup-cron.log 2>&1
 ```
 
-Rbenv users: user your user's ruby to run the command. No other setup required: `/home/deploy/.rbenv/shims/ruby /home/deploy/dropbox-database-backup/backup.rb >> /home/deploy/dropbox-database-backup/backup-cron.log 2>&1`
+Rbenv users: use your user ruby to run the command. No other setup required: `/home/deploy/.rbenv/shims/ruby /home/deploy/dropbox-database-backup/backup.rb >> /home/deploy/dropbox-database-backup/backup-cron.log 2>&1`
 
 # Usage
 
