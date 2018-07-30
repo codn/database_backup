@@ -1,11 +1,12 @@
 
 namespace :database_backup do
-  task backup: :environment do |t|
+  task backup: :environment dc o |t|
     config = ActiveRecord::Base.connection_config
 
     now = Time.now
 
-    backup_name = "#{now.to_s.gsub(' ', '_')}.pg_dump" # name of the created backup file
+    time_format = Rails.application.secrets['database_backup'].try(:[], :time_format) || "%Y-%m-%d %H-%M-%S"
+    backup_name = "#{now.strftime(time_format)}.pg_dump" # name of the created backup file
     backup_file_path = "/tmp/#{backup_name}"
     backup_folder = "/#{config[:database]}"
     oldest_backup_date = (now.to_datetime << 1).to_time # More than a month old
@@ -25,7 +26,7 @@ namespace :database_backup do
     print "Uploading #{backup_file_path} to #{backup_folder}/#{backup_name} (~#{(File.size(backup_file_path) / (1024 * 1024)).round(2)} MB)\n"
 
     # Upload to dropbox
-    dropbox_access_token = 'user_access_token'
+    dropbox_access_token = Rails.application.secrets['database_backup'].try(:[], :dropbox_key)
     client = Dropbox::Client.new(dropbox_access_token)
     client.upload "#{backup_folder}/#{backup_name}", File.read(backup_file_path)
 

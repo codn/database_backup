@@ -1,7 +1,6 @@
 require "database_backup/version"
+require "dropbox"
+require "database_backup/railtie" if defined?(Rails)
 
-module Database
-  module Backup
-    # Your code goes here...
-  end
+module DatabaseBackup
 end

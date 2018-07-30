@@ -1,8 +1,6 @@
-# Database::Backup
+# DatabaseBackup
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/database/backup`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Welcome to database backup! formerly dropbox-database-backup (stanadole banch).
 
 ## Installation
 
@@ -25,31 +23,42 @@ Or install it yourself as:
 It is recommended, when running with rails, to execute task with whenever.
 
 ```
-wheneverize .
+$ wheneverize .
 ```
 
 ## Example config/schedule.rb
 
 ```
+  set :output, 'log/database-backup.log'
+  set :environment, Rails.env
+
   every 1.day do # 1.minute 1.day 1.week 1.month 1.year is also supported
-    rake "my:rake:task"
+    rake "database_backup:backup"
   end
 ```
 
-## Development
+### Secrets configuration
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+```
+development:
+  # other configs
+  database_backup:
+    time_format: "%Y-%m-%d %H-%M-%S"
+    dropbox_key: "my-dropbox-key"
+```
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+```
+$ whenever --update-crontab
+```
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/database-backup. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/codn/database-backup. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+The gem is available as open source under the terms of the [MIT License](https://github.com/codn/database-backup/blob/master/LICENSE.txt).
 
 ## Code of Conduct
 
-Everyone interacting in the Database::Backup project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/database-backup/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the DatabaseBackup project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/codn/database-backup/blob/master/CODE_OF_CONDUCT.md).
