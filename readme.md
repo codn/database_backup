@@ -16,11 +16,11 @@ Backups are installed by running one of the following commands in your terminal.
 
 via curl
 ```
-$ sh -c "$(curl -fsSL https://raw.githubusercontent.com/codn/dropbox-database-backup/master/install.sh)"
+$ sh -c "$(curl -fsSL https://raw.githubusercontent.com/codn/database_backup/standalone/install.sh)"
 ```
 via wget
 ```
-$ sh -c "$(wget https://raw.githubusercontent.com/codn/dropbox-database-backup/master/install.sh -O -)"
+$ sh -c "$(wget https://raw.githubusercontent.com/codn/database_backup/standalone/install.sh -O -)"
 ```
 
 # Manual installation
