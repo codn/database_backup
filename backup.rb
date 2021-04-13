@@ -9,9 +9,9 @@ db_user = "rails" # User to access database
 db_pass = "db_pass" # password of the user to access database
 db_to_backup = "app_production" # name of the database to backup
 
-##########
-# Misc
-##########
+###################
+# Naming & paths
+###################
 now = Time.now
 
 backup_name = "#{now.to_s.gsub(' ', '_')}.pg_dump" # name of the created backup file
@@ -20,7 +20,7 @@ backup_folder = "/#{db_to_backup}"
 oldest_backup_date = (now.to_datetime << 1).to_time # More than a month old
 
 #############################
-# Script
+# Backup & upload to dropbox
 #############################
 print "Backing up #{db_to_backup}\n"
 system(
@@ -36,7 +36,6 @@ system(
 )
 
 print "Uploading #{backup_file_path} to #{backup_folder}/#{backup_name} (~#{(File.size(backup_file_path) / (1024 * 1024)).round(2)} MB)\n"
-# Upload to dropbox
 client = Dropbox::Client.new(dropbox_access_token)
 client.upload "#{backup_folder}/#{backup_name}", File.read(backup_file_path)
 

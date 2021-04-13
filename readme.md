@@ -84,4 +84,22 @@ Youre database is now being backed up in your dropbox and can be restored with:
 $ pg_restore -C -d database_name 2016-02-24T05_12_01-05_00.pg_dump.tar
 ```
 
+```
+$ pg_restore -C -d database_name 2016-02-24T05_12_01-05_00.pg_dump.tar
+```
+
 Issues and pull requests to improve documentation or code are welcome.
+
+# MySQL Support
+
+If creating a dump for a MySQL database. You'll need to replace the `system` call in your server for the appropiate adapter:
+```
+system(
+  "mysqldump " +
+  "-u #{db_user} " + # user
+  "-p #{db_pass} " + # password
+  "-h 127.0.0.1 "  + # host
+  db_to_backup     + # database
+  " > #{backup_file_path}"
+)
+```
