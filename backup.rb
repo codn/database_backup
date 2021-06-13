@@ -16,6 +16,7 @@ now = Time.now
 
 backup_name = "#{now.to_s.gsub(' ', '_')}.pg_dump" # name of the created backup file
 backup_file_path = "/tmp/#{backup_name}"
+backup_files = "/tmp/*.pg_dump"
 backup_folder = "/#{db_to_backup}"
 oldest_backup_date = (now.to_datetime << 1).to_time # More than a month old
 
@@ -40,7 +41,7 @@ client = Dropbox::Client.new(dropbox_access_token)
 client.upload "#{backup_folder}/#{backup_name}", File.read(backup_file_path)
 
 #####################
-# Delete old backups
+# Delete old backups in dropbox
 #####################
 files = client.list_folder backup_folder
 files.each do |file|
@@ -49,3 +50,5 @@ files.each do |file|
     client.delete file.path_lower
   end
 end
+
+system("rm", backup_files)
